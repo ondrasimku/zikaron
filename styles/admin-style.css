@@ -1,0 +1,64 @@
+:root
+{
+    --dark-background: #292929;
+    --text-color: #bbc3c8;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    background-color: var(--dark-background);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+
+}
+
+div.login-box
+{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 30vh;
+    width: 30vh;
+    box-shadow: rgba(0, 0, 0, 0.56) 0vh 2vh 4vh 0.5vh;
+    padding: 5vh;
+    text-align: center;
+}
+
+h1
+{
+    text-align: center;
+    margin: auto;
+    padding-bottom: 5vh;
+    font-size: 2.8vh;
+}
+
+.login-form input
+{
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    height: 3.3vh;
+    border: 0;
+    margin: 0 0 2vh;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 1.4vh;
+}
+
+.login-form button
+{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background-color: #328f8a;
+    background-image: linear-gradient(45deg,#6d21bf,#3c5ac7);
+    width: 50%;
+    border: 0;
+    padding: 1.3vh;
+    color: #FFFFFF;
+    font-size: 1.3vh;
+    cursor: pointer;
+}
