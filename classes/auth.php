@@ -59,7 +59,7 @@ class auth
             return false;
         }
 
-        if(!password_verify($password, $row['password'], PASSWORD_DEFAULT))
+        if(!password_verify($password, $row['password']))
         {
             return false;
         }

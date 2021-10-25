@@ -13,12 +13,17 @@ class db
     public function __construct($dbhost='localhost',
                                 $dbuser='root',
                                 $dbpass='',
-                                $dbname='',
+                                $dbname='zikaron',
                                 $charset='utf8')
     {
         try {
-            $this->connection = new PDO("mysql:host=$dbhost;dbname=$dbname;charset=$charset", $dbuser, $dbpass);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $options = [
+                PDO::ATTR_EMULATE_PREPARES   => false, // turn off emulation mode for "real" prepared statements
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, //turn on errors in the form of exceptions
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, //make the default fetch be an associative array
+                PDO::MYSQL_ATTR_FOUND_ROWS => true,
+            ];
+            $this->connection = new PDO("mysql:host=$dbhost;dbname=$dbname;charset=$charset", $dbuser, $dbpass, $options);
         } catch(PDOException $e) {
             $this->error('Failed to connect to database: ' . $e);
         }

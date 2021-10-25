@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("classes/database.php");
+require_once ("classes/auth.php");
 
 if(isset($_SESSION['is_logged']))
 {
@@ -15,7 +16,7 @@ if($_POST)
         $message = "Musíš vyplnit údaje...";
     }
 
-    $database = new DB\db("localhost", "admin", "root", "zikaron_database");
+    $database = new DB\db();
     $auth = new auth($database);
 
     $username = $_POST['username'];
@@ -41,7 +42,7 @@ if($_GET)
     if(isset($_GET['logout']))
     {
         session_destroy();
-        header('Location: admin-login.php');
+        header('Location: index.php');
     }
 }
 
