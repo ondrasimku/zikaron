@@ -74,13 +74,31 @@ nav ul li a:hover
 
 div.content
 {
+    margin-top: 5vh;
+    width: 40%;
     position: relative;
-    margin-top: 3rem;
-    width: 60%;
     left: 50%;
     transform: translate(-50%, 0);
     text-align: justify;
-    font-size: 1.1rem;
+    font-size: 1.3em;
     padding: 2vh;
-    box-shadow: rgba(0, 0, 0, 0.56) 0 22px 70px 4px;
+    /*box-shadow: rgba(0, 0, 0, 0.4) 10px 10px;*/
+    /*font-family: 'Verdana', sans-serif;*/
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+div.content h1
+{
+    color: #c9d0d4;
+    font-size: 2.2em;
+    font-weight: 100;
+    padding: 0 0 2vh;
+    border-bottom: solid #555;
+}
+
+@media only screen and (max-width: 1000px) {
+    div.content
+    {
+        width: 90%;
+    }
 }

@@ -53,7 +53,7 @@ if (is_uploaded_file($temp['tmp_name'])){
 
     // Determine the base URL
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
-    $baseurl = $protocol . $_SERVER["HTTP_HOST"] . rtrim(dirname($_SERVER['REQUEST_URI']), "/") . "/";
+    $baseurl = $protocol . $_SERVER["HTTP_HOST"] . rtrim(dirname($_SERVER['REQUEST_URI']), "\\") . "/";
 
     // Respond to the successful upload with JSON.
     // Use a location key to specify the path to the saved image resource.

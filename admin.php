@@ -52,7 +52,17 @@ if($_POST)
     }
     else if(isset($_POST['addBack']))
     {
-
+        if(isset($_POST["idsArray"]) && !empty($_POST["idsArray"]) && isset($_POST["parentId2"]))
+        {
+            if($admin->addBack($_POST["idsArray"], $_POST["parentId2"]) == false)
+            {
+                $message = '<span style="margin-left: 2rem; color: red;">Error, pokud problém přetrvává, kontaktuje správce webu.</span>';
+            }
+        }
+        else
+        {
+            $message = '<span style="margin-left: 2rem; color: red;">Musíte si něco vybrat.</span>';
+        }
     }
     else
     {
@@ -91,7 +101,7 @@ if($_POST)
             <div class="menu-items">
                 <?php $admin->renderItems(); ?>
             </div>
-            <form action="admin.php" method="post" class="addPost">
+            <form action="admin.php" method="post">
                 <select name="parentId">
                     <option value="0">Hlavní položka</option>
                     <?php $array = $admin->getItemsArray();
@@ -110,11 +120,8 @@ if($_POST)
             </form>
             <h2>Nezařazené položky</h2>
             <hr>
-            <div class="menu-items">
-                <?php $admin->renderLoneItems(); ?>
-            </div>
-            <form action="admin.php" method="post" class="addPost">
-                <select name="parentId">
+            <form action="admin.php" method="post" class="addBack">
+                <select name="parentId2">
                     <option value="0">Hlavní položka</option>
                     <?php $array = $admin->getItemsArray();
 
@@ -126,8 +133,10 @@ if($_POST)
                     }
 
                     ?>
-                </select><br>
-                <button type="submit" name="addBack">Přidat položku</button>
+                </select><button type="submit" name="addBack">Přidat položky</button><br>
+                <div class="menu-items">
+                    <?php $admin->renderLoneItems(); ?>
+                </div>
             </form>
         </div>
         <div class="flex-item">

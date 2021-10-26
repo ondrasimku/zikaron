@@ -66,7 +66,7 @@ class adminPanel
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach($items as $item)
         {
-            echo('<li>'.$item['header'].' <a href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>'.
+            echo('<li style="display: flex; justify-content: flex-start;">- '.$item['header'].' <a style="margin-left: auto;" href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>'.
                 '<a href="editPost.php?deleteId='.$item['id_item'].'" class="edit">Delete</a></li>');
         }
     }
@@ -77,17 +77,16 @@ class adminPanel
         $stmt = $this->db_conn->prepare($sql);
         $stmt->execute();
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        echo('<ul style="list-style: none;">');
         foreach($items as $item)
         {
-            echo('<ul>');
-            echo('<li>');
-            echo($item['header']);
-            echo(' <a href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>'.
+            echo('<li style="display: flex; justify-content: flex-start">');
+            echo('<input type="checkbox" name="idsArray[]" value="'.$item['id_item'].'">'.$item['header']);
+            echo(' <a style="margin-left: auto;" href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>'.
                     '<a href="editPost.php?deleteId='.$item['id_item'].'" class="edit">Delete</a>');
             echo('</li>');
-            echo('</ul>');
         }
+        echo('</ul>');
     }
 
     protected function hasChild($item)
@@ -170,6 +169,31 @@ class adminPanel
             $array[] = $item;
         }
         return $array;
+    }
+
+    public function addBack($array, $parentId)
+    {
+        foreach($array as $id)
+        {
+            if($parentId == 0)
+            {
+                $sql = "update text set id_parent=NULL where id_item=?";
+                $stmt = $this->db_conn->prepare($sql);
+                $stmt->execute([$id]);
+                if($stmt->rowCount() <= 0)
+                    return false;
+            }
+            else
+            {
+                $sql = "update text set id_parent=? where id_item=?";
+                $stmt = $this->db_conn->prepare($sql);
+                $stmt->execute([$parentId, $id]);
+                if($stmt->rowCount() <= 0)
+                    return false;
+            }
+
+        }
+        return true;
     }
 
 }

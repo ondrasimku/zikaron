@@ -28,6 +28,10 @@ if($_GET)
             die();
         }
     }
+    else if(isset($_GET['id']) && !empty($_GET['id']))
+    {
+        $id_item = $_GET['id'];
+    }
 }
 
 ?>
@@ -48,13 +52,16 @@ if($_GET)
         <nav id="navbar">
             <ul id="navbar_ul">
                 <li><a href="index.php">< Hlavní stránka ></a></li>
+                <li><a href="admin.php">< Admin Panel ></a></li>
                 <li><a href="admin-login.php?logout=1">< Odhlásit se ></a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="content">
-        <?php if(isset($message)) { echo($message); }  ?>
+    <div class="content-wrapper">
+        <div class="content">
+            <?php if(isset($id_item)) { echo('Editing: '.$id_item); }  ?>
+        </div>
     </div>
 </body>
 </html>

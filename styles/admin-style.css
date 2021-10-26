@@ -154,13 +154,18 @@ a.edit:hover
     background-position:0;
 }
 
-form.addPost
+form
 {
     margin-top: 3rem;
     margin-left: 1.3rem;
 }
 
-form.addPost button
+form.addBack
+{
+    margin-top: 1rem;
+}
+
+form button
 {
     font-size: 0.8rem;
     text-decoration: none;
@@ -179,7 +184,7 @@ form.addPost button
     background-color: transparent;
 }
 
-form.addPost button:hover
+form button:hover
 {
     background-image: linear-gradient(45deg,#6d21bf,#3c5ac7);
     transition: 0.5s linear;
@@ -187,7 +192,7 @@ form.addPost button:hover
     cursor: pointer;
 }
 
-form.addPost input[type=text]
+form input[type=text]
 {
     outline: 0;
     background: #f2f2f2;
@@ -197,7 +202,7 @@ form.addPost input[type=text]
     box-sizing: border-box;
 }
 
-form.addPost select
+form select
 {
     outline: 0;
     background: #f2f2f2;
@@ -208,9 +213,19 @@ form.addPost select
 }
 
 
+div.menu-items
+{
+    margin-right: 1rem;
+}
+
 div.menu-items li
 {
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.3rem;
+}
+
+form div.menu-items li
+{
+    margin-left: -2.6rem;
 }
 
 div.menu-items li ul li:first-of-type
@@ -235,12 +250,12 @@ div.flex-item
     /*border: 2px solid white;*/
 }
 
-div.flex-item:nth-child(2) ul
+div.flex-item:nth-of-type(2) ul
 {
     list-style-type: circle;
 }
 
-div.flex-item:nth-child(2) li
+div.flex-item:nth-of-type(2) li
 {
     padding-bottom: 0.7rem;
     width: 85%;
@@ -259,7 +274,7 @@ h2:nth-of-type(2)
 
 hr
 {
-   margin-left: 1.3rem;
+    margin-left: 1.3rem;
     margin-top: -1rem;
 }
 
