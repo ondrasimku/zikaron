@@ -36,6 +36,7 @@ class db
 
     private function error($error)
     {
+        echo($error);
         if($this->show_errors)
         {
             exit($error);
