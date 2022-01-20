@@ -108,9 +108,12 @@ if($_POST)
 
                     foreach($array as $item)
                     {
-                        echo('<option value="'.$item['id_item'].'">');
-                        echo($item['header']);
-                        echo('</option>');
+                        if($item['id_item'] !== 1)
+                        {
+                            echo('<option value="'.$item['id_item'].'">');
+                            echo($item['header']);
+                            echo('</option>');
+                        }
                     }
 
                     ?>
@@ -127,9 +130,12 @@ if($_POST)
 
                     foreach($array as $item)
                     {
-                        echo('<option value="'.$item['id_item'].'">');
-                        echo($item['header']);
-                        echo('</option>');
+                        if($item['id_item'] !== 1)
+                        {
+                            echo('<option value="'.$item['id_item'].'">');
+                            echo($item['header']);
+                            echo('</option>');
+                        }
                     }
 
                     ?>

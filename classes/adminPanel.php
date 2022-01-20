@@ -1,7 +1,7 @@
 <?php
 require_once("classes/database.php");
 use \DB\db;
-
+//https://stackoverflow.com/questions/41281752/how-to-get-longitude-and-latitude-from-google-map-url/41281834
 class adminPanel
 {
     /**
@@ -49,8 +49,15 @@ class adminPanel
             }
             else
             {
-                echo(' <a href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>'.
-                    '<a href="editPost.php?deleteId='.$item['id_item'].'" class="edit">Delete</a>');
+                if($item['id_item'] == 1)
+                {
+                    echo(' <a href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>');
+                }
+                else
+                {
+                    echo(' <a href="editPost.php?id='.$item['id_item'].'" class="edit">Edit</a>'.
+                        '<a href="editPost.php?deleteId='.$item['id_item'].'" class="edit">Delete</a>');
+                }
             }
             echo('</li>');
             echo('</ul>');

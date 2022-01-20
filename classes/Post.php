@@ -6,6 +6,10 @@ class Post
     private ?string $text;
     private int $id;
     private ?int $parentId;
+    private ?string $latitude;
+    private ?string $longitude;
+    private ?string $link;
+
 
     /**
      * @param string $header
@@ -13,12 +17,15 @@ class Post
      * @param int $id
      * @param int|null $parentId
      */
-    public function __construct(string $header, ?string $text, int $id, ?int $parentId)
+    public function __construct(string $header, ?string $text, int $id, ?int $parentId, ?string $latitude, ?string $longitude, ?string $link)
     {
         $this->header = $header;
         $this->text = $text;
         $this->id = $id;
         $this->parentId = $parentId;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->link = $link;
     }
 
     /**
@@ -95,4 +102,57 @@ class Post
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param string|null $latitude
+     * @return Post
+     */
+    public function setLatitude(?string $latitude): Post
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param string|null $longitude
+     * @return Post
+     */
+    public function setLongitude(?string $longitude): Post
+    {
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string|null $link
+     * @return Post
+     */
+    public function setLink(?string $link): Post
+    {
+        $this->link = $link;
+        return $this;
+    }
 }

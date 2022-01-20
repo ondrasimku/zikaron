@@ -26,6 +26,11 @@ class auth
         $this->db_conn = null;
     }
 
+    public function checkApiCall()
+    {
+        return isset($_SESSION["is_logged"]);
+    }
+
     public function isLogged()
     {
         if(!isset($_SESSION['is_logged']) || !isset($_SESSION['HTTP_USER_AGENT']))

@@ -70,6 +70,49 @@ class header
 
     }
 
+    public function renderMobileMenu()
+    {
+        $sql = "select header, id_parent, id_item from text";
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->execute();
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($items as $item)
+        {
+            if($this->hasParent($item))
+                continue;
+            $hasChild = $this->hasChild($item);
+            if($hasChild)
+            {
+                $link = "#";
+            }
+            else
+            {
+                $link = "getPost.php?id=".$item['id_item'];
+            }
+            if($hasChild)
+            {
+                echo('<div class="dropdown">');
+                echo('<a href="'.$link.'">'.$item['header'].' &rArr;</a>');
+                $this->renderMobileChild($item);
+                echo('</div>');
+            }
+            else
+            {
+                echo('<div class="dropdown">');
+                echo('<a href="'.$link.'">'.$item['header'].'</a>');
+                echo('</div>');
+            }
+        }
+        $auth = new auth($this->db_object);
+        if($auth->isLogged())
+        {
+            echo('<div class="dropdown">');
+            echo('<a href="admin.php">Admin Panel</a>');
+            echo('</div>');
+        }
+    }
+
     private function hasChild($item)
     {
         $sql = "select id_item from text where id_parent=?";
@@ -104,7 +147,19 @@ class header
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach($items as $item)
         {
-            echo('<a href="getPost.php?id="'.$item['id_item'].'>'.$item['header'].'</a>');
+            echo('<a href="getPost.php?id='.$item['id_item'].'">'.$item['header'].'</a>');
+        }
+    }
+
+    private function renderMobileChild($item)
+    {
+        $sql = "select header, id_item from text where id_parent=?";
+        $stmt = $this->db_conn->prepare($sql);
+        $stmt->execute([$item['id_item']]);
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach($items as $item)
+        {
+            echo('<div class="dropdown-content"><a href="getPost.php?id='.$item['id_item'].'">'.$item['header'].'</a></div>');
         }
     }
 };

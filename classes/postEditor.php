@@ -24,15 +24,15 @@ class postEditor extends adminPanel
         if(!$result)
             return null;
         else
-            return new Post($result["header"], $result["text"], $result["id_item"], $result["id_parent"]);
+            return new Post($result["header"], $result["text"], $result["id_item"], $result["id_parent"], $result["latitude"], $result["longitude"], $result["googleLink"]);
 
     }
 
     public function savePost(Post & $post) : bool
     {
-        $sql = "update text set text=?, header=? where id_item=?";
+        $sql = "update text set text=?, header=?, latitude=?, longitude=?, googleLink=? where id_item=?";
         $stmt = $this->db_conn->prepare($sql);
-        return $stmt->execute([$post->getText(), $post->getHeader(), $post->getId()]);
+        return $stmt->execute([$post->getText(), $post->getHeader(), $post->getLatitude(), $post->getLongitude(), $post->getLink(), $post->getId()]);
     }
 
     public function deleteItem($id)

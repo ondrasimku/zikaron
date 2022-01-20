@@ -22,10 +22,21 @@ div.content
     transform: translate(-50%, 0);
     text-align: justify;
     font-size: 1.3em;
+    letter-spacing: normal;
     padding: 2vh;
     /*box-shadow: rgba(0, 0, 0, 0.4) 10px 10px;*/
     /*font-family: 'Verdana', sans-serif;*/
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+div.content a
+{
+    color: #07a5a5;
+}
+
+div.content a:visited
+{
+    color: #07a5a5;
 }
 
 div.content h1
@@ -39,7 +50,7 @@ div.content h1
 
 img
 {
-    width: 100%;
+    max-width: 100%;
 }
 
 .footer
@@ -55,7 +66,14 @@ img
     /* The width is the width of the web page */
 }
 
-@media only screen and (max-width: 1000px) {
+.navigate-link-div
+{
+    text-align: center;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+@media only screen and (max-width: 800px) {
     div.content
     {
         width: 90%;

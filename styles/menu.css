@@ -4,6 +4,57 @@
     --text-color: #bbc3c8;
 }
 
+body
+{
+    margin: 0;
+    padding: 0;
+    background-color: var(--dark-background);
+    color: var(--text-color);
+    font-family: 'Playfair Display', serif;
+}
+
+div.content
+{
+    margin-top: 5vh;
+    width: 40%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: justify;
+    font-size: 1.3em;
+    padding: 2vh;
+    /*box-shadow: rgba(0, 0, 0, 0.4) 10px 10px;*/
+    /*font-family: 'Verdana', sans-serif;*/
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+div.content h1
+{
+    color: #c9d0d4;
+    font-size: 2.2em;
+    font-weight: 100;
+    padding: 0 0 2vh;
+    border-bottom: solid #555;
+}
+
+img
+{
+    width: 100%;
+}
+
+.footer
+{
+    text-align: center;
+    padding-top: 5vh;
+    padding-bottom: 4vh;
+}
+#map {
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 100%;
+    /* The width is the width of the web page */
+}
+
 div.header
 {
     background: linear-gradient(rgba(0,0,0, 0.5), rgba(0,0,0, 0.5)), url("../images/hradec2_cropped.jpg");
@@ -31,17 +82,12 @@ nav ul
     display: flex;
     justify-content: flex-end;
     flex-direction: row;
-    gap: 4rem;
+    gap: 7rem;
 }
 
 nav ul li:last-of-type
 {
     margin-right: 7rem;
-}
-
-nav ul li a:first-of-type
-{
-    margin-top: 1rem;
 }
 
 nav a
@@ -109,6 +155,7 @@ div.mobile-menu
 
 div.mobile-menu div.menu-content
 {
+    color: black;
     transition: 0.5s;
 }
 
@@ -144,7 +191,12 @@ div.mobile-menu div.dropdown:hover div.dropdown-content
 }
 
 
-@media only screen and (max-width: 1420px) {
+@media only screen and (max-width: 700px) {
+    div.content
+    {
+        width: 90%;
+    }
+
     nav
     {
 

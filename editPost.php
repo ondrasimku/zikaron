@@ -13,6 +13,7 @@ if(!$auth->isLogged())
     header('Location: admin-login.php');
 }
 $postEditor = new postEditor($database);
+$menu = new header($database);
 
 if($_GET)
 {
@@ -57,10 +58,11 @@ else
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/cn1rqadcaivd2h5gfu98endasaenuof7n7zcl8ivx8fyc2gq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts/menu.js" type="text/javascript"></script>
     <style>
         div.header
         {
-            height: 10vh;
+            height: 4rem;
         }
     </style>
 </head>
@@ -81,52 +83,107 @@ else
             "Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; " +
             "Webdings=webdings; Wingdings=wingdings,zapf dingbats",
         content_style:  "body { font-family: Play Fair; font-size: 1.3rem; }",
-        plugins: 'image autolink lists table code link',
+        plugins: 'image autolink lists table code link paste',
         toolbar: 'image code aligncenter alignjustify alignleft alignright alignnone bold' +
-            ' fontsizeselect fontselect h2 italic underline undo link unlink bulllist numlist',
+            ' fontsizeselect fontselect h2 italic underline undo link unlink bullist numlist',
         toolbar_mode: 'floating',
         tinycomments_mode: 'embedded',
         tinycomments_author: 'Author name',
-
+        link_assume_external_targets: true,
         images_upload_url : 'upload.php',
         automatic_uploads : true,
 
     });
 
     $(document).ready(function(){
+        let checkbox = document.getElementById("positionEnabled");
+        let googleLink = document.getElementById("googleLink");
+        if(checkbox.checked)
+        {
+            googleLink.disabled = false;
+        }
+        function changeError(color, string) {
+            let form = $(".form-error");
+            form.css("display", "block");
+            form.css("color", color);
+            form.html(string);
+        }
 
+        $("#positionEnabled").click(function(){
+            let googleLink = document.getElementById("googleLink");
+            let checkbox = document.getElementById("positionEnabled");
+            googleLink.disabled = !checkbox.checked;
+            if (!googleLink.disabled) {
+                googleLink.focus();
+                googleLink.setAttribute("placeholder", "Google maps link");
+            }
+            else
+            {
+                googleLink.setAttribute("placeholder", "disabled");
+            }
+        });
+
+        // Process form submission
         $(".editForm").submit(function(event){
+            // validate data
             event.preventDefault();
-            if(!$("#header").val() || !$("#textArea").val()) {
-                let form = $(".form-error");
-                form.css("display", "block");
-                form.html("Musíte vyplnit všechna pole!");
+            if(!$("#header").val() || !$("#textArea").val() || jQuery.trim($("#header").val()) === "") {
+                changeError("red", "Musíte vyplnit všechna pole!");
+                return;
+            }
+            console.log($("#positionEnabled").is(":checked") && !$("#googleLink").val());
+            if($("#positionEnabled").is(":checked") && !$("#googleLink").val())
+            {
+                changeError("red", "Musíte vyplnit google map link!");
                 return;
             }
             let myContent = tinymce.get("textArea").getContent();
-            console.log(myContent);
+            let data = $(this).serialize();
+
+            // Parse google link
+            if($("#positionEnabled").is(":checked"))
+            {
+                let url = $("#googleLink").val();
+                let regex = new RegExp('(.*),(.*)');
+                let lat_long_match = url.match(regex);
+                if(lat_long_match)
+                {
+                    if(lat_long_match[1] === null || lat_long_match[2] === null)
+                    {
+                        changeError("red", "Nepodařilo se načíst souřadnice z odkazu");
+                        return;
+                    }
+                }
+                else
+                {
+                    changeError("red", "Nepodařilo se načíst souřadnice z odkazu");
+                    return;
+                }
+                let lat = lat_long_match[1];
+                let long = lat_long_match[2];
+                data += "&latitude=" + lat + "&longitude=" + long;
+            }
+
+            // Send data
             $.ajax({
                 type: "POST",
                 url: "process.php",
-                data: $(this).serialize(),
-                dataType: "json",
+                data: data,
                 encode: true,
                 error: function(xhr, status, error) {
+                    console.error(status);
+                    console.error(error);
                     alert("Editace selhala. Pokud problém přetrvává kontaktuje správce webu.");
                 },
                 success: function(data) {
                     console.log("success");
                 }
             }).done(function (data) {
+                data = JSON.parse(data);
                 if(!data.success) {
-                    let form = $(".form-error");
-                    form.css("display", "block");
-                    form.html(data.message);
+                    changeError("lime", data.message);
                 } else {
-                    let form = $(".form-error");
-                    form.css("display", "block");
-                    form.css("color", "lime");
-                    form.html(data.message);
+                    changeError("lime", data.message);
                 }
                 console.log(data.success);
             });
@@ -136,14 +193,27 @@ else
 
 </script>
     <div class="header">
-        <nav id="navbar">
-            <ul id="navbar_ul">
+        <nav>
+            <div class="menu-lines" id="menu-open">
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+            </div>
+            <ul>
                 <?php
-                $menu = new header($database);
                 $menu->renderMenu();
                 ?>
             </ul>
         </nav>
+    </div>
+
+    <div class="mobile-menu">
+        <div class="menu-content">
+            <a href="#" id="menu-close">&#10060;</a>
+            <?php
+            $menu->renderMobileMenu();
+            ?>
+        </div>
     </div>
 
     <div class="content-wrapper">
@@ -157,14 +227,27 @@ else
             }
             ?>
             <form class="editForm" method="post">
-                <div class="form-error">testicek</div>
                 <input type="hidden" name="id_item" value="<?php echo($post->getId()); ?>">
                 <input type="text" id="header" name="header" value="<?php echo $post->getHeader();?>">
                 <textarea rows="50" name="text" id="textArea">
                     <?php echo $post->getText() ?>
                 </textarea>
-                <input type="submit" name="save" value="Submit" />
-                <input type="reset" name="reset" value="Reset" />
+                <div class="underText">
+                    <?php
+                    if($post->getLatitude() == null)
+                    {
+                        echo('Enable google position: <input type="checkbox" id="positionEnabled">');
+                    }
+                    else
+                    {
+                        echo('Enable google position: <input type="checkbox" id="positionEnabled" checked>');
+                    }
+                    ?>
+                    <input type="text" name="googleLink" id="googleLink" value="<?php if($post->getLink() == "NULL") echo ""; else echo $post->getLink(); ?>" placeholder="disabled" disabled="disabled">
+                    <input type="submit" name="save" value="Submit" />
+                    <input type="reset" name="reset" value="Reset" />
+                    <div class="form-error">testicek</div>
+                </div>
             </form>
         </div>
     </div>

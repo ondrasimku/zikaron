@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      let mobileMenu = document.querySelector("div.mobile-menu");
+      let mobileMenuContent = document.querySelector("div.mobile-menu div.menu-content");
+      document.getElementById("menu-open").addEventListener("click", async function(){
+        mobileMenu.style.width = "20rem";
+        let promise = new Promise((res, rej) => {
+          setTimeout(() => res("Now it's done!"), 400)
+        });
+        let result = await promise;
+        mobileMenuContent.style.color = "var(--text-color)";
+      });
+
+      document.getElementById("menu-close").addEventListener("click", async function(){
+        mobileMenuContent.style.color = "black";
+        let promise = new Promise((res, rej) => {
+          setTimeout(() => res("Now it's done!"), 140)
+        });
+        let result = await promise;
+        mobileMenu.style.width = "0";
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <nav>
+        <div class="menu-lines" id="menu-open">
+          <div class="menu-line"></div>
+          <div class="menu-line"></div>
+          <div class="menu-line"></div>
+        </div>
+        <ul>
+          <li>
+            <div class="dropdown">
+              <a href="#">Tuči</a>
+              <div class="dropdown-content">
+                <a href="#">More</a>
+              </div>
+            </div>
+          </li>
+          <li><a href="#">More</a></li>
+          <li><a href="#">Admin Panel</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mobile-menu">
+      <div class="menu-content">
+        <a href="#" id="menu-close">&#10060;</a>
+        <div class="dropdown">
+          Kameny zmizelých
+          <div class="dropdown-content">
+           Košíkova 6
+          </div>
+          <div class="dropdown-content">
+           Vítězné náměstí
+          </div>
+        </div>
+        <div class="dropdown">
+          Item
+          <div class="dropdown-content">
+            Under Item 1
+          </div>
+          <div class="dropdown-content">
+            Under Item 2
+          </div>
+        </div>
+        <div class="dropdown">
+          Item
+          <div class="dropdown-content">
+            Under Item 1
+          </div>
+          <div class="dropdown-content">
+            Under Item 2
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="content-wrapper">
+      <div class="content">
+        <h1>Kameny zmizelých</h1>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cum sociis natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus. Maecenas libero. Maecenas fermentum, sem in pharetra
+          pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Lorem ipsum dolor sit amet,
+          consectetuer adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+          doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+          beatae vitae dicta sunt explicabo. Fusce suscipit libero eget elit. Maecenas libero. Nulla turpis magna</p>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cum sociis natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus. Maecenas libero. Maecenas fermentum, sem in pharetra
+          pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Lorem ipsum dolor sit amet,
+          consectetuer adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+          doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+          beatae vitae dicta sunt explicabo. Fusce suscipit libero eget elit. Maecenas libero. Nulla turpis magna</p>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cum sociis natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus. Maecenas libero. Maecenas fermentum, sem in pharetra
+          pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Lorem ipsum dolor sit amet,
+          consectetuer adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+          doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+          beatae vitae dicta sunt explicabo. Fusce suscipit libero eget elit. Maecenas libero. Nulla turpis magna</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
